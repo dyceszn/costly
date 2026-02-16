@@ -9,8 +9,8 @@ const montserratAlternates = Montserrat_Alternates({
 });
 
 export const metadata: Metadata = {
-  title: "Costly",
-  description: "Your price advantage.",
+  title: "Costly: The Price Advantage",
+  description: "Centralized. Verified. Simplified.",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserratAlternates.variable}`}>
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased text-text-primary`}>{children}</body>
     </html>
   );
 }

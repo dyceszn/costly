@@ -1,5 +1,3 @@
-import { ComponentExample } from "@/components/component-example";
-
 export default function Page() {
-return <ComponentExample />;
+  return <div className="border border-black w-full h-full"></div>;
 }
