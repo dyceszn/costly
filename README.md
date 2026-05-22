@@ -68,9 +68,6 @@ Edit `.env` and set your database URL:
 ```env
 # Local PostgreSQL
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/costly"
-
-# Supabase (production)
-# DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
 ```
 
 ### 3. Create the database (local)
