@@ -57,22 +57,25 @@ cd costly
 npm install
 ```
 
+Note: `npm install` runs `prisma generate` via the `postinstall` script, but you can run `npx prisma generate` manually if needed.
+
 ### 2. Configure environment
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and set your database URL:
+Edit `.env` and set a single `DATABASE_URL`. For local Postgres:
 
 ```env
-# Local PostgreSQL
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/costly"
 ```
 
+If using Supabase, copy the project URI from the dashboard and percent-encode any special characters in the password. Ensure only one `DATABASE_URL` line is active in `.env`.
+
 ### 3. Create the database (local)
 
-In pgAdmin 17 (or psql), create a database named `costly`:
+In pgAdmin 17 (or `psql`), create a database named `costly`:
 
 ```sql
 CREATE DATABASE costly;
@@ -84,15 +87,17 @@ CREATE DATABASE costly;
 npx prisma migrate dev --name init
 ```
 
-This creates all tables (`Product`, `Seller`, `Price`, `SellerApplication`, `PriceLog`).
+Either way, this will create the tables: `Product`, `Seller`, `Price`, `SellerApplication`, and `PriceLog`.
 
 ### 5. Seed with sample data
 
+Preferred (uses the project's `tsx` dev tool already installed):
+
 ```bash
-npx prisma db seed
+npx tsx prisma/seed.ts
 ```
 
-Seeds 40 products, 15 sellers, and 50 prices from `src/data/`.
+If you prefer to use Prisma's seeding flow, `npx prisma db seed` will run the command configured in `package.json` (`ts-node ... prisma/seed.ts`). If `ts-node` is not available you can either install it (`npm install -D ts-node`) or use the `npx tsx prisma/seed.ts` command above.
 
 ### 6. Start the development server
 
