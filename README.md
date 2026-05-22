@@ -1,6 +1,30 @@
-# Costly – The Price Advantage
+# Costly
 
-Costly is a market-intelligence and price-mapping platform that aggregates product pricing data across sellers to uncover price inefficiencies and improve procurement transparency. It combines structured product search, seller verification, and private & crowdsourced price intelligence to help consumers and businesses make data-driven purchasing decisions.. Built with Next.js, PostgreSQL (Prisma), Zod validation, and Tailwind CSS.
+### _Price intelligence for a more transparent market._
+
+Costly is a market intelligence and price mapping platform that aggregates real-world product pricing across sellers to expose inefficiencies, improve transparency, and enable smarter purchasing decisions.
+
+It combines structured product search, seller verification, and crowd + private price intelligence to give both consumers and businesses a clearer view of the market.
+
+Built with **Next.js**, **PostgreSQL (Prisma)**, **Zod**, and **Tailwind CSS**.
+
+---
+
+## What Costly does
+
+Costly helps you answer one simple question:
+
+> _“How much does this actually cost?”_
+
+- Aggregates pricing across multiple sellers in real time
+
+- Detects pricing gaps and inconsistencies
+
+- Builds structured product intelligence from unstructured data
+
+- Enables crowdsourced + verified price submissions
+
+- Supports both consumer insight and procurement decisions
 
 ---
 
