@@ -1,24 +1,29 @@
 import React from "react";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import { Field, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
+import { OnboardingFormData } from "./OnboardingInterface";
 
-const AboutUserForm = () => {
+interface AboutUserFormProps {
+  formData: OnboardingFormData;
+  update: (patch: Partial<OnboardingFormData>) => void;
+}
+
+const inputClass =
+  "h-14 text-center placeholder:text-text-muted bg-white border placeholder:text-sm focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none";
+
+const AboutUserForm: React.FC<AboutUserFormProps> = ({ formData, update }) => {
   return (
-    <form className="md:w-2xl w-full flex flex-col items-center gap-6">
+    <div className="md:w-2xl w-full flex flex-col items-center gap-6">
       <Field className="w-full">
         <FieldLabel className="hidden">Email Address</FieldLabel>
         <Input
           type="email"
           placeholder="Email address"
           required
-          className="h-14 text-center placeholder:text-text-muted bg-white border placeholder:text-sm focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+          value={formData.email}
+          onChange={(e) => update({ email: e.target.value })}
+          className={inputClass}
         />
-        <FieldDescription className="hidden">
-          Enter your email address. This field is required.
-        </FieldDescription>
-        <FieldError className="hidden">
-          Invalid email address. Please enter a valid email.
-        </FieldError>
       </Field>
 
       <Field className="w-full">
@@ -27,14 +32,10 @@ const AboutUserForm = () => {
           type="text"
           placeholder="First name"
           required
-          className="h-14 text-center placeholder:text-text-muted bg-white border placeholder:text-sm focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+          value={formData.firstName}
+          onChange={(e) => update({ firstName: e.target.value })}
+          className={inputClass}
         />
-        <FieldDescription className="hidden">
-          Enter your First Name. This field is required.
-        </FieldDescription>
-        <FieldError className="hidden">
-          Invalid First Name. Please enter a valid First Name.
-        </FieldError>
       </Field>
 
       <Field className="w-full">
@@ -43,32 +44,24 @@ const AboutUserForm = () => {
           type="text"
           placeholder="Last name"
           required
-          className="h-14 text-center placeholder:text-text-muted bg-white border placeholder:text-sm focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+          value={formData.lastName}
+          onChange={(e) => update({ lastName: e.target.value })}
+          className={inputClass}
         />
-        <FieldDescription className="hidden">
-          Enter your Last Name. This field is required.
-        </FieldDescription>
-        <FieldError className="hidden">
-          Invalid Last Name. Please enter a valid last name.
-        </FieldError>
       </Field>
 
-      <Field className="w-full ">
+      <Field className="w-full">
         <FieldLabel className="hidden">Phone number</FieldLabel>
         <Input
           type="tel"
           placeholder="Phone number"
           required
-          className="h-14 text-center placeholder:text-text-muted bg-white border placeholder:text-sm focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+          value={formData.phone}
+          onChange={(e) => update({ phone: e.target.value })}
+          className={inputClass}
         />
-        <FieldDescription className="hidden">
-          Enter your Phone Number. This field is required.
-        </FieldDescription>
-        <FieldError className="hidden">
-          Invalid Phone Number. Please enter a valid phone number.
-        </FieldError>
       </Field>
-    </form>
+    </div>
   );
 };
 

@@ -1,0 +1,140 @@
+// Costly – Prisma schema
+// Local dev: PostgreSQL via pgAdmin 17
+// Production: Supabase Postgres (same connection string format)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Products ────────────────────────────────────────────────────────────────
+
+model Product {
+  id             String   @id
+  barcode        String   @unique
+  name           String
+  searchableName String
+  description    String
+  category       String
+  tags           String[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  prices Price[]
+}
+
+// ─── Sellers ─────────────────────────────────────────────────────────────────
+
+model Seller {
+  id             String    @id
+  handle         String    @unique
+  // Representative contact
+  firstName      String
+  lastName       String
+  email          String
+  phone          String
+  // Business info
+  category       String    // "vendor" | "store"
+  branchName     String?
+  name           String
+  searchableName String
+  address        String
+  city           String
+  state          String
+  country        String    @default("Nigeria")
+  // Contact channels (at least one required)
+  supportEmail   String?
+  supportPhone   String?
+  website        String?
+  facebook       String?
+  twitter        String?
+  instagram      String?
+  tiktok         String?
+  whatsapp       String?
+  // Verification
+  isVerified     Boolean   @default(false)
+  verifiedAt     DateTime?
+  trustScore     Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  prices Price[]
+}
+
+// ─── Prices ──────────────────────────────────────────────────────────────────
+
+model Price {
+  id        String   @id
+  productId String
+  sellerId  String?
+  amount    Float
+  currency  String   @default("NGN")
+  // isActive=false means the entry is archived, not deleted (data integrity)
+  isActive  Boolean  @default(true)
+  // basePrice = admin-verified reference price displayed prominently
+  basePrice Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Product  @relation(fields: [productId], references: [id])
+  seller  Seller?  @relation(fields: [sellerId], references: [id])
+}
+
+// ─── Seller Applications (onboarding submissions) ─────────────────────────────
+
+model SellerApplication {
+  id           String   @id @default(cuid())
+  category     String   // "vendor" | "store"
+  // Representative info
+  firstName    String
+  lastName     String
+  email        String
+  phone        String
+  // Business info
+  businessName String
+  branchName   String?
+  country      String   @default("Nigeria")
+  state        String
+  city         String
+  address      String
+  // Channels
+  instagram    String?
+  whatsapp     String?
+  facebook     String?
+  tiktok       String?
+  twitter      String?
+  website      String?
+  supportEmail String?
+  supportPhone String?
+  // Seller handle (unique public ID, prefixed "S-" in the UI)
+  handle       String   @unique
+  // Admin review status
+  status       String   @default("pending") // "pending" | "approved" | "rejected"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── Price Logs (community price submissions) ─────────────────────────────────
+
+model PriceLog {
+  id          String   @id @default(cuid())
+  // productId is null when the product doesn't exist in the DB yet
+  productId   String?
+  productName String
+  price       Float
+  category    String
+  tags        String[]
+  sellerId    String?
+  currency    String   @default("NGN")
+  // source: who submitted ("user" | "seller" | "admin")
+  source      String   @default("user")
+  createdAt   DateTime @default(now())
+}
